@@ -1,0 +1,105 @@
+{
+  "input": "/Users/chen/Documents/Codex/2026-11-02/ni-k/perception_demo/data/calvin_unstack_before.jpg",
+  "image_size_px": [
+    200,
+    200
+  ],
+  "objects": [
+    {
+      "detector_score": 0.3514,
+      "label": "blue_block",
+      "mask_quality": 0.9639,
+      "representative_rgb": [
+        3.5,
+        0.0,
+        178.0
+      ],
+      "object_id": "blue_block",
+      "centroid_px": [
+        92.0,
+        88.0
+      ],
+      "median_depth_m": 0.903,
+      "approx_camera_xyz_m": [
+        -0.0451,
+        -0.0677,
+        0.903
+      ],
+      "mask_bbox": [
+        84,
+        80,
+        101,
+        95
+      ]
+    },
+    {
+      "detector_score": 0.3508,
+      "label": "pink_block",
+      "mask_quality": 0.9624,
+      "representative_rgb": [
+        140.5,
+        3.0,
+        172.5
+      ],
+      "object_id": "pink_block",
+      "centroid_px": [
+        95.0,
+        93.0
+      ],
+      "median_depth_m": 0.9004,
+      "approx_camera_xyz_m": [
+        -0.0281,
+        -0.0394,
+        0.9004
+      ],
+      "mask_bbox": [
+        84,
+        80,
+        111,
+        103
+      ]
+    },
+    {
+      "detector_score": 0.3835,
+      "label": "red_block",
+      "mask_quality": 0.959,
+      "representative_rgb": [
+        193.0,
+        5.0,
+        3.0
+      ],
+      "object_id": "red_block",
+      "centroid_px": [
+        129.0,
+        88.0
+      ],
+      "median_depth_m": 0.9258,
+      "approx_camera_xyz_m": [
+        0.1678,
+        -0.0694,
+        0.9258
+      ],
+      "mask_bbox": [
+        120,
+        77,
+        138,
+        99
+      ]
+    }
+  ],
+  "models": {
+    "detector": "IDEA-Research/grounding-dino-tiny",
+    "segmenter": "facebook/sam2.1-hiera-tiny",
+    "depth": "depth-anything/Depth-Anything-V2-Metric-Indoor-Small-hf"
+  },
+  "timings_seconds": {
+    "grounding_dino_s": 6.837,
+    "sam2_s": 1.844,
+    "depth_anything_v2_s": 1.161
+  },
+  "coordinate_notes": {
+    "centroid_px": "Mask centroid in source-image pixel coordinates.",
+    "median_depth_m": "Median monocular metric-depth estimate inside the SAM mask.",
+    "approx_camera_xyz_m": "Approximate camera-frame XYZ using assumed intrinsics; replace with calibrated RGB-D for deployment."
+  }
+}

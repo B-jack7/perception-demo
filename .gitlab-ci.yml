@@ -1,0 +1,16 @@
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public/data public/outputs
+    - cp interactive_viewer.html public/index.html
+    - cp data/calvin_unstack_before.jpg public/data/
+    - cp outputs/object_positions.json public/outputs/
+    - cp outputs/depth_colormap.png public/outputs/
+    - cp outputs/mask_blue_block.png public/outputs/
+    - cp outputs/mask_pink_block.png public/outputs/
+    - cp outputs/mask_red_block.png public/outputs/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
