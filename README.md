@@ -1,62 +1,50 @@
-# Robot perception route — real reproducible demo
+# Active Multi-View RGB-D Reconstruction Demo
 
-This project is a meeting-ready implementation of the **hybrid perception route** for stacked-object manipulation. It runs three real pretrained models and turns their outputs into an inspectable support graph:
+This repository presents an independent technical route for Case 2: active multi-view RGB-D reconstruction followed by 3D scene-graph grounding.
 
-1. **Grounding DINO Tiny** proposes task-relevant objects from an RGB image using an open-vocabulary text prompt.
-2. **SAM 2.1 Hiera Tiny** converts the learned boxes into pixel-accurate masks.
-3. **Depth Anything V2 Metric Indoor Small** estimates metric monocular depth.
-4. An explicit geometric layer proposes `supported_by` relations and a safe removal order.
+The meeting demo visualizes the complete proposal:
 
-The demo contains no hand-authored boxes or masks. The final support relation is deliberately rule-based and exports its evidence, so it can be debugged and challenged in the meeting.
+1. Capture an initial overhead RGB-D view with Orbbec Gemini 335.
+2. Move the wrist-mounted Gemini 305 to additional safe viewpoints.
+3. Transform each partial cloud into the robot-base frame using forward kinematics and hand-eye calibration.
+4. Refine alignment with constrained ICP and fuse the observations with a voxel grid or TSDF.
+5. Remove the table, cluster objects, fit cuboids and build a 3D scene graph.
+6. Convert a spatial language command into a structured graph query.
+7. Select a target, plan the motion, execute it and refresh the changed part of the map.
 
-## Run
+## Open the demo
 
-From this directory:
-
-```bash
-uv sync
-uv run python run_demo.py
-```
-
-The first run downloads about 1–2 GB of public model weights into `.cache/huggingface`. Later runs reuse the local cache. CPU mode is the reproducible default and takes roughly tens of seconds on the current Apple Silicon Mac.
-
-Optional MPS acceleration:
+Open `index.html` directly, or serve the directory locally:
 
 ```bash
-uv run python run_demo.py --device auto
+python3 -m http.server 8765
 ```
 
-The generated artifacts appear in `outputs/`:
+Then visit <http://127.0.0.1:8765/>.
 
-- `01_grounding_dino_boxes.png` — raw learned proposals and confidence scores
-- `02_sam2_masks.png` — learned pixel masks and object identity
-- `03_metric_depth.png` — Depth Anything V2 output
-- `04_support_graph.png` — geometric relation graph and removal plan
-- `05_pipeline_summary.png` — one-slide live-demo summary
-- `scene_graph.json` — machine-readable nodes, edges, evidence, model IDs, and timings
-- `object_positions.json` — perception-only object positions for the interactive viewer
-- `mask_*.png` and `metric_depth_m.npy` — raw intermediate products
+The old `interactive_viewer.html` URL redirects to the new demo so previously shared links remain usable.
 
-## Interactive position viewer
+## Interactions
 
-After the model run finishes, open the local hover-to-inspect interface:
+- Play the full route automatically or select an individual step.
+- Compare active multi-view reconstruction with a single overhead view.
+- Drag to orbit the reconstructed scene and scroll to zoom.
+- Click a reconstructed object to inspect its position and dimensions.
+- Watch the camera viewpoint, visible surface coverage, scene graph and planned robot path change across the route.
 
-```bash
-uv run python run_interactive.py
-```
+## Scope and honesty
 
-The browser view lets you switch between RGB and depth, toggle real SAM masks, and hover over an object to inspect its pixel centroid, estimated depth, approximate camera XYZ position, detector score, and mask quality. Use `--rerun` if you want the model inference and viewer launch in one command.
+The current web demo uses a deterministic synthetic tabletop scene. It explains the proposed architecture and does not claim to be live Orbbec output. The next implementation steps are real ROS 2 camera topics, hand-eye calibration, safe SO-101 viewpoints, point-cloud registration and evaluation on recorded rosbags.
 
-## What this proves—and what it does not
+This route assumes access to Platform A:
 
-It proves that a practical, modular perception route can turn a real robot-scene RGB image into proposals, masks, depth estimates, and an explicit support hypothesis. It is suitable as a technical prototype and as a baseline architecture.
+- Orbbec Gemini 335 overhead RGB-D camera
+- Orbbec Gemini 305 wrist-mounted RGB-D camera
+- SO-101 arm
+- Jetson AGX Orin
 
-It is not yet a safety-certified manipulation stack. The sample lacks calibrated camera intrinsics, monocular depth is less reliable than a physical RGB-D sensor, and support edges should be stabilized across multiple frames before the robot executes a motion. Replacing the estimated depth with RealSense/Kinect depth is the natural next step; the graph layer can remain the same.
+Access to Platform A and permission to move the wrist camera before manipulation must still be confirmed.
 
-## Model and data sources
+## Legacy prototype
 
-- Grounding DINO Tiny: <https://huggingface.co/IDEA-Research/grounding-dino-tiny>
-- SAM 2.1 Hiera Tiny: <https://huggingface.co/facebook/sam2.1-hiera-tiny>
-- Depth Anything V2 Metric Indoor Small: <https://huggingface.co/depth-anything/Depth-Anything-V2-Metric-Indoor-Small-hf>
-- CALVIN benchmark: <https://github.com/mees/calvin>
-- Image pair used here: row 62 from the public CALVIN validation mirror at <https://huggingface.co/datasets/ShuaKang/calvin_abc_d_val>
+The previous Grounding DINO + SAM 2 + monocular-depth scripts and generated assets remain in the repository only as legacy material. They are not part of the current proposed route and are no longer linked from the meeting demo.

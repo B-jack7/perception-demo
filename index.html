@@ -2,12 +2,85 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=interactive_viewer.html?v=positions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Robot Perception Demo</title>
-    <link rel="canonical" href="interactive_viewer.html?v=positions">
+    <meta name="description" content="Interactive proposal demo for active multi-view RGB-D reconstruction and 3D scene-graph grounding.">
+    <title>Active Multi-View RGB-D Demo</title>
+    <link rel="stylesheet" href="active_demo.css?v=1">
   </head>
   <body>
-    <p><a href="interactive_viewer.html?v=positions">Open the interactive perception demo</a></p>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">CASE 2 · INDEPENDENT PERCEPTION ROUTE</p>
+          <h1>Active Multi-View RGB-D Reconstruction</h1>
+          <p class="subtitle">Move the wrist camera, fuse partial point clouds, build a 3D scene graph, then ground a spatial command.</p>
+        </div>
+        <div class="proposal-badge" aria-label="Demo status">
+          <span class="status-dot"></span>
+          Interactive proposal
+        </div>
+      </header>
+
+      <section class="toolbar" aria-label="Demo controls">
+        <label class="mode-field">
+          <span>Reconstruction mode</span>
+          <select id="mode-select">
+            <option value="active">Active multi-view</option>
+            <option value="single">Single overhead view</option>
+          </select>
+        </label>
+        <div class="button-row">
+          <button class="primary" id="play-button" type="button">▶ Play route</button>
+          <button id="previous-button" type="button">← Previous</button>
+          <button id="next-button" type="button">Next →</button>
+        </div>
+        <button class="quiet" id="reset-view" type="button">Reset 3D view</button>
+      </section>
+
+      <nav class="stepper" id="stepper" aria-label="Technical route"></nav>
+
+      <section class="workspace">
+        <div class="viewport-card">
+          <canvas id="scene-canvas" aria-label="Interactive 3D scene. Drag to orbit, scroll to zoom, and click an object for details."></canvas>
+          <div class="viewport-status" aria-live="polite">
+            <span id="view-status"></span>
+            <span id="point-status"></span>
+            <span id="map-status"></span>
+          </div>
+          <div class="canvas-help">Drag to orbit · Scroll to zoom · Click an object</div>
+        </div>
+
+        <aside class="explanation" aria-live="polite">
+          <p class="step-number" id="step-number"></p>
+          <h2 id="step-title"></h2>
+          <p id="step-description"></p>
+          <div class="algorithm-list" id="algorithm-list"></div>
+          <div class="data-panel">
+            <div class="data-heading">
+              <span id="data-label">Pipeline state</span>
+              <span class="mono" id="data-frame"></span>
+            </div>
+            <pre><code id="data-preview"></code></pre>
+          </div>
+          <div class="takeaway">
+            <span>What this stage proves</span>
+            <p id="stage-takeaway"></p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="route-summary" aria-label="Complete system route">
+        <div><strong>RGB-D</strong><span>Gemini 335 / 305</span></div><i>→</i>
+        <div><strong>3D map</strong><span>TF · ICP · TSDF</span></div><i>→</i>
+        <div><strong>Scene graph</strong><span>Objects · relations</span></div><i>→</i>
+        <div><strong>Grounding</strong><span>Language → graph query</span></div><i>→</i>
+        <div><strong>Robot</strong><span>MoveIt 2 · verify</span></div>
+      </section>
+
+      <footer>
+        <strong>Scope:</strong> simulated RGB-D measurements illustrate the proposed architecture. Real Orbbec topics, hand-eye calibration and robot-safe viewpoints are the next implementation steps. Platform A access must be confirmed.
+      </footer>
+    </main>
+    <script src="active_demo.js?v=1"></script>
   </body>
 </html>
