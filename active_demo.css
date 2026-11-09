@@ -25,7 +25,7 @@ h1 { margin: 0; font-size: clamp(30px, 4vw, 52px); line-height: 1.02; letter-spa
 .toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin-bottom: 14px; }
 .mode-field { display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
 .button-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.stepper { display: grid; grid-template-columns: repeat(7, minmax(92px, 1fr)); gap: 5px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 3px; }
+.stepper { display: grid; grid-template-columns: repeat(8, minmax(92px, 1fr)); gap: 5px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 3px; }
 .step-button { min-height: 60px; padding: 8px 9px; text-align: left; color: var(--muted); background: rgba(13,24,34,.65); }
 .step-button span { display: block; margin-bottom: 3px; color: #688297; font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .step-button strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
@@ -51,7 +51,7 @@ pre { min-height: 180px; max-height: 250px; margin: 0; padding: 13px; overflow: 
 .takeaway { margin-top: auto; padding-top: 18px; }
 .takeaway > span { color: var(--orange); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
 .takeaway p { margin: 6px 0 0; line-height: 1.45; }
-.route-summary { display: grid; grid-template-columns: repeat(9, auto); align-items: center; justify-content: center; gap: clamp(8px, 1.4vw, 22px); margin: 18px 0; padding: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.route-summary { display: grid; grid-template-columns: repeat(11, auto); align-items: center; justify-content: center; gap: clamp(7px, 1.15vw, 18px); margin: 18px 0; padding: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .route-summary div { text-align: center; }
 .route-summary strong, .route-summary span { display: block; }
 .route-summary strong { margin-bottom: 3px; }
